@@ -1,0 +1,35 @@
+CREATE DATABASE video_library;
+USE video_library;
+CREATE TABLE directors (
+Director_ID INT AUTO_INCREMENT,
+Full_name VARCHAR(50) NOT NULL,
+Birthday DATE,
+CONSTRAINT pk_directors PRIMARY KEY (Director_ID),
+CONSTRAINT uq_director_name UNIQUE INDEX (Full_name)
+);
+CREATE TABLE actors (
+Actor_ID INT AUTO_INCREMENT,
+Full_name VARCHAR(50) NOT NULL,
+Birthday DATE,
+CONSTRAINT pk_actors PRIMARY KEY (Actor_ID),
+CONSTRAINT uq_actor_name UNIQUE INDEX (Full_name)
+);
+CREATE TABLE films (
+Film_ID INT AUTO_INCREMENT,
+Film_name VARCHAR(100) NOT NULL,
+Director_ID INT NOT NULL,
+Country VARCHAR(50),
+_Year YEAR,
+CONSTRAINT pk_films PRIMARY KEY (Film_ID),
+CONSTRAINT fk_directors FOREIGN KEY (Director_ID)
+REFERENCES directors(Director_ID) ON UPDATE RESTRICT ON DELETE CASCADE,
+CONSTRAINT uq_film_name UNIQUE INDEX (Film_name)
+);
+CREATE TABLE films_actors (
+Film_ID INT NOT NULL,
+Actor_ID INT NOT NULL,
+CONSTRAINT fk_films FOREIGN KEY (Film_ID)
+REFERENCES films(Film_ID) ON UPDATE RESTRICT ON DELETE CASCADE,
+CONSTRAINT fk_actors FOREIGN KEY (Actor_ID)
+REFERENCES actors(Actor_ID) ON UPDATE RESTRICT ON DELETE CASCADE
+);
